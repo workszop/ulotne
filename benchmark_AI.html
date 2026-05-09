@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jak wybrać AI dla organizacji? — Benchmark modeli AI | Quantica Lab</title>
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --quantica-pink:    #C41E54;
+    --rose-pink:        #FF4D9A;
+    --deep-berry:       #8A004C;
+    --magenta-tint:     #FFE6F1;
+
+    --violet-primary:   #7030A0;
+    --violet-deep:      #4F1F75;
+    --ink:              #0A1F2C;
+    --mist:             #F0F8F6;
+
+    --near-black:       #111111;
+    --white:            #FFFFFF;
+
+    --fg-1:             #111111;
+    --fg-2:             #3A3A42;
+    --fg-3:             #6B6B76;
+    --fg-4:             #9A9AA5;
+
+    --bg-1:             #FFFFFF;
+    --bg-2:             #F5F6F8;
+
+    --border-1:         #E6E8EC;
+    --border-2:         #D1D5DB;
+
+    --teal:             #7030A0;
+
+    --font-display:     "Satoshi", system-ui, -apple-system, sans-serif;
+    --font-sans:        "Satoshi", system-ui, -apple-system, sans-serif;
+    --font-mono:        "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --radius-sm:        6px;
+    --radius-md:        10px;
+    --radius-lg:        16px;
+    --radius-xl:        24px;
+
+    --shadow-sm:        0 2px 6px rgba(17,17,17,0.06);
+    --shadow-md:        0 8px 24px rgba(17,17,17,0.08);
+    --shadow-pink-soft: 0 6px 18px rgba(192,0,102,0.10);
+
+    --page-w: 210mm;
+    --page-h: 297mm;
+    --page-pad-x: 18mm;
+    --page-pad-y: 18mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--fg-2);
+    background: #ECEEF2;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ─── PAGE (A4) ─── */
+  .page {
+    width: var(--page-w);
+    min-height: var(--page-h);
+    margin: 18px auto;
+    background: var(--bg-1);
+    box-shadow: 0 30px 80px -20px rgba(10,20,40,0.18), 0 8px 24px -8px rgba(10,20,40,0.08);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .page + .page { page-break-before: always; break-before: page; }
+  .page-content { padding: var(--page-pad-y) var(--page-pad-x); }
+  .page-last    { padding: var(--page-pad-y) var(--page-pad-x) 0; }
+
+  /* ─── COVER ─── */
+  .page-cover {
+    color: #fff;
+    padding: var(--page-pad-y) var(--page-pad-x);
+    background:
+      radial-gradient(ellipse 70% 55% at 78% 70%, rgba(112,48,160,0.36) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 45% at 18% 22%, rgba(192,0,102,0.55) 0%, transparent 70%),
+      linear-gradient(160deg, #07151f 0%, #0A1F2C 50%, #0d2538 100%);
+    overflow: hidden;
+  }
+  .page-cover::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 60%, black 30%, transparent 90%);
+    pointer-events: none;
+  }
+  .cover-q {
+    position: absolute;
+    right: -4%; top: 18%;
+    width: 62%;
+    opacity: 0.18;
+    filter: drop-shadow(0 30px 60px rgba(192,0,102,0.45));
+    pointer-events: none;
+  }
+  .cover-q img { width: 100%; display: block; }
+  .cover-slash {
+    position: absolute;
+    left: 0; right: 0; top: 64%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--rose-pink) 30%, var(--rose-pink) 70%, transparent 100%);
+    opacity: 0.55;
+    transform: rotate(-3deg);
+    pointer-events: none;
+  }
+  .cover-top {
+    position: absolute;
+    top: var(--page-pad-y);
+    left: var(--page-pad-x); right: var(--page-pad-x);
+    z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .cover-top .meta {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.55);
+  }
+  .cover-bottom {
+    position: absolute;
+    bottom: 26mm;
+    left: var(--page-pad-x); right: var(--page-pad-x);
+    z-index: 2;
+  }
+  .cover-eyebrow {
+    font-family: var(--font-mono);
+    font-weight: 500; font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rose-pink);
+    margin-bottom: 16px;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .cover-eyebrow::before {
+    content: ""; display: block;
+    width: 28px; height: 1px;
+    background: var(--rose-pink);
+  }
+  .cover-title {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 60px;
+    line-height: 1.0; letter-spacing: -0.025em;
+    color: #fff; max-width: 92%;
+  }
+  .cover-title em { font-style: normal; color: var(--rose-pink); }
+  .cover-tagline {
+    font-size: 14.5px; line-height: 1.55;
+    color: rgba(255,255,255,0.78);
+    max-width: 70%; margin-top: 18px; font-weight: 400;
+  }
+  .cover-footer {
+    position: absolute;
+    bottom: 12mm;
+    left: var(--page-pad-x); right: var(--page-pad-x);
+    z-index: 2;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-family: var(--font-mono);
+    font-size: 10.5px; color: rgba(255,255,255,0.5); letter-spacing: 0.04em;
+  }
+
+  /* ─── TYPE ─── */
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    color: var(--fg-1);
+    letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .h-major {
+    font-size: 34px; font-weight: 700;
+    line-height: 1.05; margin-bottom: 20px;
+    letter-spacing: -0.025em;
+  }
+  .h-section {
+    font-size: 22px; font-weight: 700;
+    margin-top: 22px; margin-bottom: 14px;
+    letter-spacing: -0.015em;
+  }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--quantica-pink);
+    display: inline-flex; align-items: center; gap: 10px;
+    margin-bottom: 10px;
+  }
+  .eyebrow::before {
+    content: ""; width: 22px; height: 1px;
+    background: var(--quantica-pink);
+  }
+  p {
+    font-size: 13px; line-height: 1.65;
+    color: var(--fg-2); margin-bottom: 10px;
+  }
+  .lead-block { margin-bottom: 18px; }
+
+  /* ─── BULLETS ─── */
+  .bullets { list-style: none; margin: 4px 0 12px 4px; padding: 0; }
+  .bullets li {
+    position: relative; padding-left: 22px;
+    font-size: 13px; line-height: 1.65;
+    color: var(--fg-2); margin-bottom: 4px;
+  }
+  .bullets li::before {
+    content: ""; position: absolute;
+    left: 0; top: 9px;
+    width: 10px; height: 2px;
+    background: var(--quantica-pink); border-radius: 1px;
+  }
+
+  /* ─── NUMBERED ─── */
+  .num-list { display: flex; flex-direction: column; margin-top: 8px; }
+  .num-row {
+    display: grid; grid-template-columns: 64px 1fr;
+    gap: 18px; align-items: start;
+    padding: 18px 0; border-top: 1px solid var(--border-1);
+    break-inside: avoid;
+  }
+  .num-row:first-child { border-top: none; padding-top: 6px; }
+  .num-row .digit {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 56px; line-height: 0.9;
+    color: var(--quantica-pink); letter-spacing: -0.04em;
+  }
+  .num-label {
+    font-family: var(--font-display); font-weight: 700;
+    color: var(--fg-1); font-size: 16px;
+    margin-bottom: 8px; line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+  .num-row p { font-size: 12.5px; line-height: 1.6; margin-bottom: 8px; }
+  .num-row p:last-child { margin-bottom: 0; }
+
+  /* ─── FEATURES ─── */
+  .features {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 18px; margin-bottom: 14px;
+  }
+  .feature {
+    flex: 0 0 calc(33.333% - 12px); min-width: 0;
+    break-inside: avoid;
+    border: 1px solid var(--border-1);
+    border-radius: var(--radius-md);
+    padding: 16px; background: var(--bg-1);
+  }
+  .feature h4 {
+    font-size: 14px; font-weight: 700;
+    color: var(--fg-1); margin-bottom: 10px;
+    letter-spacing: -0.005em; line-height: 1.3;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .feature-icon {
+    width: 36px; height: 36px;
+    background: var(--magenta-tint);
+    border-radius: var(--radius-sm);
+    display: grid; place-items: center;
+    color: var(--quantica-pink);
+  }
+  .feature-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .feature p { font-size: 12px; line-height: 1.6; margin: 0; color: var(--fg-2); }
+
+  /* ─── HIGHLIGHT FIGURE ─── */
+  .highlight-figure {
+    background: var(--magenta-tint);
+    padding: 16px 20px; border-radius: var(--radius-md);
+    margin: 10px 0 18px;
+    border: 1.5px solid var(--quantica-pink);
+  }
+  .highlight-figure p { margin: 0; font-size: 13px; line-height: 1.55; color: var(--fg-1); }
+  .highlight-figure strong { color: var(--quantica-pink); font-weight: 700; }
+
+  /* ─── CLOSING ─── */
+  .closing {
+    margin-top: 16px; padding: 18px 20px;
+    background: var(--bg-2); border-radius: var(--radius-md);
+    border: 1.5px solid var(--teal);
+  }
+  .closing p { font-size: 12.5px; line-height: 1.6; margin: 0; color: var(--fg-1); }
+  .closing strong { color: var(--quantica-pink); font-weight: 700; }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 50%, rgba(112,48,160,0.28) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 70% at 0% 0%, rgba(192,0,102,0.30) 0%, transparent 65%),
+      linear-gradient(135deg, #0A1F2C 0%, #0d2538 100%);
+    color: #fff;
+    padding: 24px 28px;
+    margin: 24px 0 0;
+    border-radius: var(--radius-lg);
+    position: relative; overflow: hidden;
+  }
+  .contact .eyebrow { color: var(--rose-pink); margin-bottom: 12px; }
+  .contact .eyebrow::before { background: var(--rose-pink); }
+  .contact h2 {
+    color: #fff; font-family: var(--font-display);
+    font-size: 24px; font-weight: 700;
+    margin-bottom: 12px; letter-spacing: -0.025em; line-height: 1.1;
+  }
+  .contact p { color: rgba(255,255,255,0.82); font-size: 12px; margin-bottom: 16px; max-width: 560px; }
+  .contact-info {
+    display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.16);
+    padding-top: 16px; position: relative; z-index: 1;
+  }
+  .contact-meta {
+    display: flex; flex-direction: column; gap: 4px;
+    font-size: 12.5px; color: rgba(255,255,255,0.78);
+  }
+  .contact-meta strong { color: #fff; font-weight: 600; }
+  .contact-meta a { color: var(--rose-pink); text-decoration: none; }
+  .contact-meta a:hover { text-decoration: underline; }
+  .contact-logo img { height: 40px; width: auto; display: block; }
+
+  /* ─── PRINT BUTTON ─── */
+  .print-btn {
+    position: fixed; right: 18px; bottom: 18px; z-index: 50;
+    background: var(--quantica-pink); color: #fff;
+    border: none; padding: 12px 20px;
+    font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.04em; cursor: pointer; border-radius: 999px;
+    box-shadow: var(--shadow-pink-soft); transition: transform 200ms;
+  }
+  .print-btn:hover { background: var(--deep-berry); transform: translateY(-1px); }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 22px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-1);
+  }
+  .page-header .logo img { height: 28px; width: auto; display: block; }
+  .page-header .pgnum {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--fg-3); letter-spacing: 0.04em;
+  }
+  .page-header .pgnum em { font-style: normal; color: var(--quantica-pink); font-weight: 600; }
+
+  /* ─── LAST PAGE — contact pinned to bottom ─── */
+  .page-6 { padding-bottom: var(--page-pad-y); }
+  .page-6 .contact { margin-top: auto; }
+
+  /* ─── RESPONSIVE ─── */
+  @media screen and (max-width: 760px) {
+    .page { width: 100%; min-height: auto; margin: 12px 0; }
+    .page-content, .page-last { padding: 32px 24px; }
+    .page-cover { padding: 36px 24px; aspect-ratio: 3/4; min-height: auto; }
+    .cover-top { top: 36px; left: 24px; right: 24px; }
+    .cover-bottom { bottom: 36px; left: 24px; right: 24px; }
+    .cover-footer { bottom: 18px; left: 24px; right: 24px; }
+    .cover-title { font-size: 38px; }
+    .cover-tagline { max-width: 100%; }
+    .cover-q { width: 60%; right: -8%; top: 28%; }
+    .h-major { font-size: 26px; }
+    .h-section { font-size: 18px; }
+    .num-row { grid-template-columns: 48px 1fr; gap: 12px; padding: 14px 0; }
+    .num-row .digit { font-size: 44px; }
+    .features { grid-template-columns: 1fr; gap: 14px; }
+    .contact { padding: 32px 24px; }
+    .contact h2 { font-size: 22px; }
+  }
+
+  /* ─── PRINT ─── */
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: white; margin: 0; padding: 0; }
+    .page {
+      width: 210mm; height: 297mm; min-height: 297mm;
+      margin: 0; box-shadow: none;
+      page-break-after: always; break-after: page; overflow: hidden;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+    .print-btn { display: none; }
+    .features { gap: 14px; }
+    .feature { flex-basis: calc(33.333% - 9.5px); }
+    .num-row { grid-template-columns: 56px 1fr; gap: 16px; padding: 13px 0; }
+    .page-content { padding: 16mm var(--page-pad-x); }
+    .page-last { padding: 16mm var(--page-pad-x) 0; }
+    .page-6 { padding-bottom: 16mm; }
+    .h-major { font-size: 24pt; margin-bottom: 8pt; line-height: 1.05; }
+    .h-section { font-size: 15pt; margin-top: 12pt; margin-bottom: 6pt; }
+    p { font-size: 10pt; line-height: 1.55; margin-bottom: 6pt; }
+    .lead-block { margin-bottom: 8pt; }
+    .bullets { margin: 2pt 0 8pt 4px; }
+    .bullets li { font-size: 10pt; line-height: 1.55; margin-bottom: 2pt; padding-left: 18px; }
+    .bullets li::before { top: 7pt; }
+    .num-row .digit { font-size: 42pt; }
+    .num-label { font-size: 12pt; margin-bottom: 4pt; }
+    .num-row p { font-size: 9.5pt; line-height: 1.5; margin-bottom: 5pt; }
+    .feature { padding: 11px 13px; }
+    .feature-icon { width: 30px; height: 30px; }
+    .feature-icon svg { width: 16px; height: 16px; }
+    .feature h4 { font-size: 11pt; margin-bottom: 6pt; gap: 9px; }
+    .feature p { font-size: 9.5pt; line-height: 1.5; }
+    .highlight-figure { padding: 11px 15px; margin: 7pt 0 12pt; }
+    .highlight-figure p { font-size: 10pt; line-height: 1.5; }
+    .closing { padding: 13px 16px; margin-top: 10pt; }
+    .closing p { font-size: 10pt; line-height: 1.55; }
+    .contact { padding: 18px 22px; margin-top: 14pt; border-radius: 12px; }
+    .contact h2 { font-size: 18pt; margin-bottom: 6pt; }
+    .contact p { font-size: 9pt; margin-bottom: 10pt; }
+    .contact-info { padding-top: 10pt; gap: 18px; }
+    .contact-meta { font-size: 9pt; }
+    .cover-title { font-size: 52pt; }
+    .cover-eyebrow { font-size: 10pt; margin-bottom: 10pt; }
+    .cover-tagline { font-size: 11pt; margin-top: 12pt; }
+    .page-header { margin-bottom: 14pt; padding-bottom: 8pt; }
+    .page-header .logo img { height: 22px; }
+    .page-header .pgnum { font-size: 9pt; }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Pobierz PDF →</button>
+
+<article class="doc">
+
+<!-- ═══════ PAGE 1 — COVER ═══════ -->
+<section class="page page-cover">
+  <div class="cover-q" aria-hidden="true">
+    <img src="../quantica-q-mark-white.png" alt="">
+  </div>
+  <div class="cover-slash" aria-hidden="true"></div>
+
+  <div class="cover-top">
+    <div class="logo">
+      <img src="../quantica-logo-white.png" alt="Quantica Lab" style="height:40px;width:auto;display:block;">
+    </div>
+    <div class="meta">BENCHMARK MODELI AI · 2026</div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-eyebrow">Jak wybrać AI dla organizacji?</div>
+    <h1 class="cover-title">Praktyczne kryteria<br>wyboru <em>rozwiązań AI</em>.</h1>
+    <p class="cover-tagline">Jak oceniać modele AI pod kątem rzeczywistych potrzeb organizacji - od benchmarków publicznych po testy na własnych danych.</p>
+  </div>
+
+  <div class="cover-footer">
+    <div>quanticalab.ai</div>
+    <div>Benchmark modeli AI</div>
+  </div>
+</section>
+
+<!-- ═══════ PAGE 2 — KONTEKST ═══════ -->
+<section class="page page-content">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>02</em> / 06 · Kontekst</div>
+  </div>
+
+  <div class="eyebrow">Kontekst</div>
+  <h2 class="h-major">Jak wybrać AI<br>dla organizacji?</h2>
+
+  <section class="lead-block">
+    <p>W ostatnich latach pojawiły się setki modeli AI (m.in. GPT, Claude, LLaMA, Gemini, Mistral) od różnych dostawców technologii, takich jak Google, IBM, Microsoft czy polscy integratorzy. Rozwijają się one niezwykle szybko, a nowe wersje publikowane są co kilka miesięcy.</p>
+    <p>W tak dynamicznym środowisku wybór właściwego rozwiązania AI dla organizacji staje się coraz trudniejszy. Nie powinien on opierać się wyłącznie na popularności modelu ani na wynikach testów prezentowanych w materiałach marketingowych producentów. Kluczowe jest dopasowanie rozwiązania do konkretnych zastosowań, danych oraz sposobu działania organizacji.</p>
+    <p>Oznacza to konieczność oceny jakości odpowiedzi generowanych przez model AI pod kątem scenariuszy użycia w organizacji, a także uwzględnienia takich aspektów jak:</p>
+  </section>
+
+  <div class="features">
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </span>
+        bezpieczeństwo danych
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </span>
+        koszty wykorzystania modelu
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </span>
+        stabilność działania i skalowalność
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </span>
+        możliwość integracji z istniejącymi systemami
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+        </span>
+        dostępność modeli w infrastrukturze lokalnej lub chmurowej
+      </h4>
+    </div>
+  </div>
+
+  <p>W przypadku scenariuszy związanych z tworzeniem treści szczególne znaczenie ma również jakość języka polskiego. Większość modeli AI trenowana była głównie na danych anglojęzycznych, co przekłada się na ograniczoną znajomość polskiej normy językowej oraz polskiego kontekstu kulturowego i prawnego. W efekcie w odpowiedziach generowanych po polsku mogą pojawiać się kalki językowe, nienaturalne konstrukcje lub uproszczenia wynikające z przenoszenia anglosaskich wzorców komunikacji.</p>
+  <p>Właściwie zaprojektowane testy pozwalają sprawdzić, czy model rzeczywiście nadaje się do pracy w środowisku polskojęzycznym, zwłaszcza w zastosowaniach wymagających precyzji językowej i znajomości lokalnego kontekstu. Podobne podejście stosuje się także do oceny innych aspektów działania rozwiązań AI. Najlepszym sposobem takiej oceny jest uporządkowane porównanie wyników różnych modeli na tych samych zadaniach i danych. Takie podejście określa się mianem benchmarku modeli AI.</p>
+
+</section>
+
+<!-- ═══════ PAGE 3 — BENCHMARK ═══════ -->
+<section class="page page-content">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>03</em> / 06 · Benchmark</div>
+  </div>
+
+  <div class="eyebrow">Definicja</div>
+  <h2 class="h-major">Czym jest benchmark<br>modeli AI?</h2>
+
+  <section class="lead-block">
+    <p>Benchmark to zestaw zadań oraz jasno zdefiniowanych kryteriów oceny, który pozwala w sposób kompleksowy porównywać jakość działania wybranych modeli AI we wskazanym obszarze zastosowań.</p>
+    <p><strong>Benchmarki mają różny charakter:</strong></p>
+  </section>
+
+  <div class="features">
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </span>
+        Ogólne
+      </h4>
+      <p>Sprawdzają ogólne zdolności modeli, takie jak rozumienie tekstu, logika czy wiedza faktograficzna</p>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </span>
+        Domenowe
+      </h4>
+      <p>Koncentrują się na konkretnych dziedzinach, np. medycynie, prawie czy finansach</p>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </span>
+        Zadaniowe
+      </h4>
+      <p>Mierzą jakość modeli w konkretnych zadaniach, takich jak klasyfikacja dokumentów, wydobycie informacji czy streszczanie</p>
+    </div>
+  </div>
+
+  <h3 class="h-section">Dlaczego warto stworzyć benchmark na własnych danych?</h3>
+
+  <p>Choć publiczne benchmarki są bardzo przydatne w badaniach nad AI, w praktyce wdrożeń organizacyjnych często okazują się niewystarczające. Mierzą one ogólne zdolności modeli, ale rzadko odzwierciedlają rzeczywiste scenariusze zastosowań w organizacjach.</p>
+  <p>Benchmark przygotowany na realnych danych organizacji pozwala sprawdzić działanie modeli w kontekście rzeczywistych zadań, takich jak analiza dokumentów, zarządzanie wiedzą, obsługa zapytań użytkowników czy wsparcie procesów decyzyjnych.</p>
+  <p>Najważniejszą zaletą takiego podejścia jest możliwość podejmowania racjonalnych decyzji technologicznych. W wielu przypadkach okazuje się, że modele dostępne na rynku są już wystarczająco dobre do realizacji danego zadania i nie wymagają kosztownego trenowania ani dostrajania. Benchmark pozwala to sprawdzić w sposób obiektywny oraz wskazać obszary, w których douczenie modelu AI na nowych danych może znacząco poprawić jego skuteczność.</p>
+
+</section>
+
+<!-- ═══════ PAGE 4 — PROCES ═══════ -->
+<section class="page page-content">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>04</em> / 06 · Proces wyboru</div>
+  </div>
+
+  <div class="eyebrow">Metodyka</div>
+  <h2 class="h-major">Jak wygląda proces wyboru<br>modelu AI w organizacji?</h2>
+
+  <p>W praktyce wybór modelu językowego powinien przebiegać w kilku krokach.</p>
+
+  <div class="num-list">
+    <div class="num-row">
+      <span class="digit">1</span>
+      <div>
+        <h4 class="num-label">Identyfikacja scenariuszy zastosowań</h4>
+        <p>Najpierw identyfikowane są realne scenariusze wykorzystania AI w organizacji, np. wsparcie obsługi klienta, wyszukiwanie informacji w bazach wiedzy czy automatyczne przygotowywanie raportów.</p>
+      </div>
+    </div>
+
+    <div class="num-row">
+      <span class="digit">2</span>
+      <div>
+        <h4 class="num-label">Analiza wyników w istniejących benchmarkach</h4>
+        <p>W drugim kroku analizowane są wyniki modeli AI w dostępnych benchmarkach publicznych, które pozwalają wstępnie ocenić ich możliwości w danym typie zadań. W przypadku zastosowań polskojęzycznych szczególne znaczenie mają benchmarki oceniające poprawność językową oraz znajomość lokalnego kontekstu.</p>
+      </div>
+    </div>
+
+    <div class="num-row">
+      <span class="digit">3</span>
+      <div>
+        <h4 class="num-label">Testy modeli na danych organizacji</h4>
+        <p>W drugim kroku analizowane są wyniki modeli AI w dostępnych benchmarkach publicznych, które pozwalają wstępnie ocenić ich możliwości w danym typie zadań. W przypadku zastosowań polskojęzycznych szczególne znaczenie mają benchmarki oceniające poprawność językową oraz znajomość lokalnego kontekstu.</p>
+      </div>
+    </div>
+
+    <div class="num-row">
+      <span class="digit">4</span>
+      <div>
+        <h4 class="num-label">Wybór modelu i architektury rozwiązania</h4>
+        <p>Dopiero dzięki analizie wyników wewnętrznego benchmarku możliwe jest wskazanie najlepszego rozwiązania – zarówno w zakresie wyboru modelu AI, jak i architektury docelowego systemu, np. systemu RAG (Retrieval Augmented Generation).</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 class="h-section">Kiedy potrzebna jest adaptacja modelu?</h3>
+
+  <p>Jeśli dostępne modele nie spełniają wymagań jakościowych, możliwe jest ich dalsze dostosowanie do potrzeb organizacji.</p>
+  <p>W zależności od problemu stosuje się różne strategie adaptacji modeli. W niektórych przypadkach konieczne jest dostosowanie modelu do specyfiki danej domeny, np. jej terminologii i stylu komunikacji. W innych sytuacjach wystarczy nauczyć model realizacji konkretnego zadania poprzez dostrajanie (fine-tuning). Pierwsze podejście jest zwykle bardziej wymagające obliczeniowo i kosztowne, natomiast drugie pozwala szybciej osiągnąć oczekiwane rezultaty. Quantica Lab oferuje wsparcie w realizacji obu tych podejść.</p>
+  <p>Benchmark pozwala w sposób obiektywny ocenić, czy i jaka adaptacja jest rzeczywiście potrzebna, oraz wskazać najbardziej efektywną ścieżkę jej realizacji.</p>
+
+</section>
+
+<!-- ═══════ PAGE 5 — WSPARCIE ═══════ -->
+<section class="page page-content">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>05</em> / 06 · Wsparcie</div>
+  </div>
+
+  <div class="eyebrow">Jak możemy pomóc</div>
+  <h2 class="h-major">Nasze wsparcie</h2>
+
+  <p>W naszej praktyce punktem wyjścia dla racjonalnego wyboru technologii jest rzetelne porównanie modeli AI w benchmarkach opartych na rzeczywistych danych i scenariuszach użycia. Nasze wsparcie nie ogranicza się jednak do oceny modeli – wspieramy organizacje na wszystkich etapach projektowania i wdrażania AI:</p>
+
+  <div class="features" style="margin-top:14px;">
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        identyfikacji i definiowaniu kluczowych scenariuszy zastosowania AI
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+        </span>
+        analizie wyników modeli AI w dostępnych benchmarkach, w tym benchmarkach oceniających ich dostosowanie do języka i kontekstu polskiego
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        </span>
+        opracowaniu benchmarków AI opartych na realnych danych i zadaniach organizacji
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+        </span>
+        przygotowaniu i uporządkowaniu zbiorów danych organizacji
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+        </span>
+        rekomendacji najlepszego modelu oraz architektury systemu
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="2" x2="9" y2="4"/><line x1="15" y1="2" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="22"/><line x1="15" y1="20" x2="15" y2="22"/><line x1="20" y1="9" x2="22" y2="9"/><line x1="20" y1="14" x2="22" y2="14"/><line x1="2" y1="9" x2="4" y2="9"/><line x1="2" y1="14" x2="4" y2="14"/></svg>
+        </span>
+        projektowaniu i wdrażaniu systemów opartych na modelach AI
+      </h4>
+    </div>
+    <div class="feature">
+      <h4>
+        <span class="feature-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        </span>
+        adaptacji modeli poprzez kontynuację pretreningu lub dostrajanie (fine-tuning)
+      </h4>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════ PAGE 6 — DLACZEGO MY + KONTAKT ═══════ -->
+<section class="page page-last page-content page-6">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>06</em> / 06 · Dlaczego my & kontakt</div>
+  </div>
+
+  <h3 class="h-section" style="margin-top:0;">Dlaczego my?</h3>
+
+  <p>Quantica Lab specjalizuje się w ocenie, adaptacji i wdrażaniu modeli AI, pomagając organizacjom porównywać dostępne technologie i wybierać te, które najlepiej rozwiązują konkretne problemy biznesowe.</p>
+  <p>Posiadamy szerokie doświadczenie w ewaluacji systemów AI, w tym w projektowaniu metod oceny, przygotowywaniu zbiorów testowych oraz analizie wyników modeli. Jesteśmy współautorami benchmarków służących do oceny jakości modeli językowych w różnych zadaniach i domenach.
+  Nasz zespół należy do najbardziej doświadczonych w Polsce w zakresie oceny i adaptacji modeli AI. Kompetencje te rozwijaliśmy m.in. podczas prac nad polskimi dużymi modelami językowymi PLLuM.</p>
+  <p>Nasze rekomendacje są niezależne od producentów i oparte wyłącznie na kryteriach merytorycznych, wynikających z potrzeb organizacji oraz wymogów operacyjnych.</p>
+  <p>Stosujemy systematyczne, naukowe podejście do projektowania i oceny systemów AI, wykorzystując najnowsze metody rozwijane w społeczności badawczej (state-of-the-art). Ocena modeli stanowi jednak dopiero pierwszy krok w procesie budowy rozwiązań AI. W bardziej wymagających zastosowaniach konieczna jest ich adaptacja do specyfiki danej domeny lub zadania. Quantica Lab wspiera organizacje zarówno w porównywaniu modeli poprzez benchmarki, jak i w ich dostrajaniu oraz wdrażaniu w docelowych systemach AI.</p>
+
+  <h3 class="h-section">Dlaczego warto zacząć od benchmarku?</h3>
+
+  <p>Największym wyzwaniem nie jest dziś dostępność modeli AI, ale rzetelna ocena i wybór rozwiązania najlepiej dopasowanego do potrzeb organizacji. Benchmark na własnych danych jest najprostszym sposobem sprawdzenia, czy rozpatrywane rozwiązanie spełnia kryteria wymagane do jego wdrożenia – zarówno pod względem jakości generowanych odpowiedzi, jak i szybkości działania czy kosztów infrastruktury. Pozwala przejść od opinii o modelach i marketingowych deklaracji producentów do mierzalnego porównania jakości i racjonalnej decyzji technologicznej.</p>
+
+  <section class="contact">
+    <div class="eyebrow">Kontakt</div>
+    <h2>Zapraszamy do kontaktu.</h2>
+    <div class="contact-info">
+      <div class="contact-logo">
+        <img src="../quantica-logo-white.png" alt="Quantica Lab">
+      </div>
+      <div class="contact-meta">
+        <strong>Quanticalab Sp. z o.o.</strong>
+        <a href="mailto:kontakt@quanticalab.ai">kontakt@quanticalab.ai</a>
+        <a href="https://www.quanticalab.ai" target="_blank" rel="noopener">www.quanticalab.ai</a>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+</article>
+</body>
+</html>

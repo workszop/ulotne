@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oferta szkoleń AI — Quantica Lab</title>
+
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --quantica-pink:    #C41E54;
+    --rose-pink:        #FF4D9A;
+    --deep-berry:       #8A004C;
+    --magenta-tint:     #FFE6F1;
+
+    --violet-primary:   #7030A0;
+    --violet-deep:      #4F1F75;
+    --ink:              #0A1F2C;
+    --mist:             #F0F8F6;
+
+    --near-black:       #111111;
+    --white:            #FFFFFF;
+
+    --fg-1:             #111111;
+    --fg-2:             #3A3A42;
+    --fg-3:             #6B6B76;
+    --fg-4:             #9A9AA5;
+
+    --bg-1:             #FFFFFF;
+    --bg-2:             #F5F6F8;
+
+    --border-1:         #E6E8EC;
+    --border-2:         #D1D5DB;
+
+    --teal:             #7030A0;
+
+    --font-display:     "Satoshi", system-ui, -apple-system, sans-serif;
+    --font-sans:        "Satoshi", system-ui, -apple-system, sans-serif;
+    --font-mono:        "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --radius-sm:        6px;
+    --radius-md:        10px;
+    --radius-lg:        16px;
+    --radius-xl:        24px;
+
+    --shadow-sm:        0 2px 6px rgba(17,17,17,0.06);
+    --shadow-md:        0 8px 24px rgba(17,17,17,0.08);
+    --shadow-pink-soft: 0 6px 18px rgba(192,0,102,0.10);
+
+    --page-w: 210mm;
+    --page-h: 297mm;
+    --page-pad-x: 18mm;
+    --page-pad-y: 18mm;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--fg-2);
+    background: #ECEEF2;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ─── PAGE (A4) ─── */
+  .page {
+    width: var(--page-w);
+    min-height: var(--page-h);
+    margin: 18px auto;
+    background: var(--bg-1);
+    box-shadow: 0 30px 80px -20px rgba(10,20,40,0.18), 0 8px 24px -8px rgba(10,20,40,0.08);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .page + .page { page-break-before: always; break-before: page; }
+  .page-content { padding: var(--page-pad-y) var(--page-pad-x); }
+  .page-last    { padding: var(--page-pad-y) var(--page-pad-x) 0; }
+
+  /* ─── COVER ─── */
+  .page-cover {
+    color: #fff;
+    padding: var(--page-pad-y) var(--page-pad-x);
+    background:
+      radial-gradient(ellipse 70% 55% at 78% 70%, rgba(112,48,160,0.36) 0%, transparent 65%),
+      radial-gradient(ellipse 60% 45% at 18% 22%, rgba(192,0,102,0.55) 0%, transparent 70%),
+      linear-gradient(160deg, #07151f 0%, #0A1F2C 50%, #0d2538 100%);
+    overflow: hidden;
+  }
+  .page-cover::before {
+    content: "";
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 60%, black 30%, transparent 90%);
+    pointer-events: none;
+  }
+  .cover-q {
+    position: absolute; right: -4%; top: 18%;
+    width: 62%; opacity: 0.18;
+    filter: drop-shadow(0 30px 60px rgba(192,0,102,0.45));
+    pointer-events: none;
+  }
+  .cover-q img { width: 100%; display: block; }
+  .cover-slash {
+    position: absolute; left: 0; right: 0; top: 64%; height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--rose-pink) 30%, var(--rose-pink) 70%, transparent 100%);
+    opacity: 0.55; transform: rotate(-3deg); pointer-events: none;
+  }
+  .cover-top {
+    position: absolute; top: var(--page-pad-y);
+    left: var(--page-pad-x); right: var(--page-pad-x);
+    z-index: 2; display: flex; justify-content: space-between; align-items: center;
+  }
+  .cover-top .meta {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.04em; color: rgba(255,255,255,0.55);
+  }
+  .cover-bottom {
+    position: absolute; bottom: 26mm;
+    left: var(--page-pad-x); right: var(--page-pad-x); z-index: 2;
+  }
+  .cover-eyebrow {
+    font-family: var(--font-mono); font-weight: 500; font-size: 12px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--rose-pink);
+    margin-bottom: 16px; display: inline-flex; align-items: center; gap: 10px;
+  }
+  .cover-eyebrow::before { content: ""; display: block; width: 28px; height: 1px; background: var(--rose-pink); }
+  .cover-title {
+    font-family: var(--font-display); font-weight: 700; font-size: 60px;
+    line-height: 1.0; letter-spacing: -0.025em; color: #fff; max-width: 92%;
+  }
+  .cover-title em { font-style: normal; color: var(--rose-pink); }
+  .cover-tagline {
+    font-size: 14.5px; line-height: 1.55; color: rgba(255,255,255,0.78);
+    max-width: 70%; margin-top: 18px; font-weight: 400;
+  }
+  .cover-footer {
+    position: absolute; bottom: 12mm;
+    left: var(--page-pad-x); right: var(--page-pad-x); z-index: 2;
+    display: flex; justify-content: space-between; align-items: flex-end;
+    font-family: var(--font-mono); font-size: 10.5px;
+    color: rgba(255,255,255,0.5); letter-spacing: 0.04em;
+  }
+
+  /* ─── PAGE HEADER ─── */
+  .page-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 28px; padding-bottom: 16px;
+    border-bottom: 1px solid var(--border-1);
+  }
+  .page-header .logo img { height: 28px; width: auto; display: block; }
+  .page-header .pgnum {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--fg-3); letter-spacing: 0.04em;
+  }
+  .page-header .pgnum em { font-style: normal; color: var(--quantica-pink); font-weight: 600; }
+
+  /* ─── TYPE ─── */
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display); color: var(--fg-1);
+    letter-spacing: -0.02em; line-height: 1.1;
+  }
+  .h-major {
+    font-size: 34px; font-weight: 700;
+    line-height: 1.05; margin-bottom: 20px; letter-spacing: -0.025em;
+  }
+  .h-section {
+    font-size: 22px; font-weight: 700;
+    margin-top: 22px; margin-bottom: 14px; letter-spacing: -0.015em;
+  }
+  .eyebrow {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--quantica-pink);
+    display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  }
+  .eyebrow::before { content: ""; width: 22px; height: 1px; background: var(--quantica-pink); }
+  p { font-size: 13px; line-height: 1.65; color: var(--fg-2); margin-bottom: 10px; }
+
+  /* ─── PAGE 2 — intro sizes ─── */
+  .page-intro .h-major {
+    font-size: 48px;
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    margin-top: 8px;
+  }
+  .page-intro p {
+    font-size: 15.5px;
+    line-height: 1.75;
+    margin-bottom: 18px;
+    color: var(--fg-2);
+  }
+
+  /* ─── TRAINING PAGES (3–5) ─── */
+  .page-training .h-major {
+    font-size: 40px;
+    line-height: 1.02;
+    margin-bottom: 22px;
+  }
+  .page-training .lead-text {
+    font-size: 14.5px;
+    line-height: 1.72;
+    color: var(--fg-2);
+    margin-bottom: 18px;
+  }
+  .page-training .dist-row {
+    padding: 18px 0;
+  }
+  .page-training .dist-label {
+    font-size: 14.5px;
+  }
+  .page-training .bullets li {
+    font-size: 13.5px;
+    line-height: 1.65;
+    margin-bottom: 6px;
+  }
+
+  /* ─── BULLETS ─── */
+  .bullets { list-style: none; margin: 4px 0 0 0; padding: 0; }
+  .bullets li {
+    position: relative; padding-left: 22px;
+    font-size: 13px; line-height: 1.65;
+    color: var(--fg-2); margin-bottom: 5px;
+  }
+  .bullets li::before {
+    content: ""; position: absolute; left: 0; top: 9px;
+    width: 10px; height: 2px; background: var(--quantica-pink); border-radius: 1px;
+  }
+
+  /* ─── DIST ROWS ─── */
+  .dist-list { display: flex; flex-direction: column; margin-top: 4px; }
+  .dist-row {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 20px; align-items: start;
+    padding: 14px 0; border-top: 1px solid var(--border-1);
+    break-inside: avoid;
+  }
+  .dist-row:first-child { border-top: none; padding-top: 4px; }
+  .dist-label {
+    font-family: var(--font-display); font-weight: 700;
+    color: var(--quantica-pink); font-size: 13.5px;
+    line-height: 1.25; letter-spacing: -0.01em;
+  }
+  .dist-label .modul-num {
+    display: block; font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--fg-3);
+    font-weight: 500; margin-bottom: 4px;
+  }
+  .dist-row p { font-size: 12.5px; line-height: 1.6; margin-bottom: 8px; color: var(--fg-2); }
+  .dist-row p:last-child { margin-bottom: 0; }
+
+  /* ─── HIGHLIGHT / START Z AI ─── */
+  .start-box {
+    background: var(--magenta-tint);
+    padding: 22px 24px; border-radius: var(--radius-md);
+    margin-bottom: 20px; border: 1.5px solid var(--quantica-pink);
+  }
+  .start-box .program-title {
+    font-family: var(--font-display); font-weight: 700; font-size: 22px;
+    color: var(--quantica-pink); letter-spacing: -0.015em; margin-bottom: 12px;
+  }
+  .start-box p { font-size: 13.5px; line-height: 1.65; color: var(--fg-1); margin-bottom: 10px; }
+  .start-box p:last-of-type { margin-bottom: 14px; }
+  .start-box .dist-row { border-top-color: rgba(196,30,84,0.2); }
+  .start-box .dist-label { font-size: 13px; }
+  .start-box .bullets li { font-size: 12.5px; }
+
+  /* ─── LAST PAGE — push contact to bottom with breathing room ─── */
+  .page-6 { justify-content: flex-start; padding-bottom: var(--page-pad-y); }
+  .page-6 .contact { margin-top: auto; }
+
+  /* ─── CLOSING (prep note) ─── */
+  .closing {
+    margin: 0 0 18px; padding: 14px 18px;
+    background: var(--bg-2); border-radius: var(--radius-md);
+    border: 1.5px solid var(--teal); break-inside: avoid;
+  }
+  .closing p { font-size: 12.5px; line-height: 1.6; margin: 0; color: var(--fg-1); }
+  .closing strong { color: var(--quantica-pink); font-weight: 700; }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    background:
+      radial-gradient(ellipse 70% 60% at 80% 50%, rgba(112,48,160,0.28) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 70% at 0% 0%, rgba(192,0,102,0.30) 0%, transparent 65%),
+      linear-gradient(135deg, #0A1F2C 0%, #0d2538 100%);
+    color: #fff; padding: 24px 28px; margin: 24px 0 0;
+    border-radius: var(--radius-lg); position: relative; overflow: hidden;
+  }
+  .contact .eyebrow { color: var(--rose-pink); margin-bottom: 12px; }
+  .contact .eyebrow::before { background: var(--rose-pink); }
+  .contact h2 {
+    color: #fff; font-family: var(--font-display);
+    font-size: 24px; font-weight: 700;
+    margin-bottom: 12px; letter-spacing: -0.025em; line-height: 1.1;
+  }
+  .contact p { color: rgba(255,255,255,0.82); font-size: 12px; margin-bottom: 16px; max-width: 560px; }
+  .contact-info {
+    display: flex; flex-wrap: wrap; gap: 24px; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.16);
+    padding-top: 16px; position: relative; z-index: 1;
+  }
+  .contact-meta { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: rgba(255,255,255,0.78); }
+  .contact-meta strong { color: #fff; font-weight: 600; }
+  .contact-meta a { color: var(--rose-pink); text-decoration: none; }
+  .contact-meta a:hover { text-decoration: underline; }
+  .contact-logo img { height: 40px; width: auto; display: block; }
+
+  /* ─── PRINT BUTTON ─── */
+  .print-btn {
+    position: fixed; right: 18px; bottom: 18px; z-index: 50;
+    background: var(--quantica-pink); color: #fff;
+    border: none; padding: 12px 20px;
+    font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.04em; cursor: pointer; border-radius: 999px;
+    box-shadow: var(--shadow-pink-soft); transition: transform 200ms;
+  }
+  .print-btn:hover { background: var(--deep-berry); transform: translateY(-1px); }
+
+  /* ─── RESPONSIVE ─── */
+  @media screen and (max-width: 760px) {
+    .page { width: 100%; min-height: auto; margin: 12px 0; }
+    .page-content, .page-last { padding: 32px 24px; }
+    .page-cover { padding: 36px 24px; aspect-ratio: 3/4; min-height: auto; }
+    .cover-top { top: 36px; left: 24px; right: 24px; }
+    .cover-bottom { bottom: 36px; left: 24px; right: 24px; }
+    .cover-footer { bottom: 18px; left: 24px; right: 24px; }
+    .cover-title { font-size: 38px; }
+    .cover-tagline { max-width: 100%; }
+    .cover-q { width: 60%; right: -8%; top: 28%; }
+    .page-intro .h-major { font-size: 32px; }
+    .page-training .h-major { font-size: 28px; }
+    .dist-row { grid-template-columns: 1fr; gap: 6px; }
+    .contact { padding: 32px 24px; }
+  }
+
+  /* ─── PRINT ─── */
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: white; margin: 0; padding: 0; }
+    .page {
+      width: 210mm; height: 297mm; min-height: 297mm;
+      margin: 0; box-shadow: none;
+      page-break-after: always; break-after: page; overflow: hidden;
+    }
+    .page:last-child { page-break-after: auto; break-after: auto; }
+    .print-btn { display: none; }
+
+    .page-content { padding: 14mm var(--page-pad-x); }
+    .page-last    { padding: 14mm var(--page-pad-x) 0; }
+    .page-6       { padding-bottom: 14mm; }
+
+    /* cover */
+    .cover-title { font-size: 52pt; }
+    .cover-eyebrow { font-size: 10pt; margin-bottom: 10pt; }
+    .cover-tagline { font-size: 11pt; margin-top: 12pt; }
+
+    /* page header */
+    .page-header { margin-bottom: 16pt; padding-bottom: 8pt; }
+    .page-header .logo img { height: 22px; }
+    .page-header .pgnum { font-size: 9pt; }
+
+    /* page 2 intro */
+    .page-intro .h-major { font-size: 32pt; margin-bottom: 18pt; }
+    .page-intro p { font-size: 12pt; line-height: 1.7; margin-bottom: 10pt; }
+
+    /* training pages 3–5 */
+    .page-training .h-major { font-size: 26pt; margin-bottom: 12pt; }
+    .page-training .lead-text { font-size: 11pt; line-height: 1.65; margin-bottom: 10pt; }
+    .dist-row { grid-template-columns: 170px 1fr; gap: 16px; padding: 11pt 0; }
+    .dist-label { font-size: 10.5pt; }
+    .dist-label .modul-num { font-size: 8pt; }
+    .page-training .dist-label { font-size: 11pt; }
+    .bullets li { font-size: 9.5pt; line-height: 1.55; margin-bottom: 2pt; padding-left: 16px; }
+    .bullets li::before { top: 6.5pt; }
+    .page-training .bullets li { font-size: 10pt; line-height: 1.6; margin-bottom: 3pt; }
+    .closing { padding: 10px 14px; margin-bottom: 10pt; }
+    .closing p { font-size: 9pt; }
+
+    /* page 6 — start z ai + contact */
+    .start-box { padding: 16px 20px; margin-bottom: 14pt; }
+    .start-box .program-title { font-size: 16pt; margin-bottom: 8pt; }
+    .start-box p { font-size: 9.5pt; margin-bottom: 6pt; }
+    .start-box .bullets li { font-size: 9pt; }
+    .contact { padding: 16px 20px; margin-top: 14pt; border-radius: 10px; }
+    .contact h2 { font-size: 16pt; margin-bottom: 5pt; }
+    .contact p { font-size: 8.5pt; margin-bottom: 8pt; }
+    .contact-info { padding-top: 8pt; gap: 14px; }
+    .contact-meta { font-size: 8.5pt; }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">Pobierz PDF →</button>
+
+<article class="doc">
+
+<!-- ═══════ PAGE 1 — COVER ═══════ -->
+<section class="page page-cover">
+  <div class="cover-q" aria-hidden="true">
+    <img src="../quantica-q-mark-white.png" alt="">
+  </div>
+  <div class="cover-slash" aria-hidden="true"></div>
+
+  <div class="cover-top">
+    <div class="logo">
+      <img src="../quantica-logo-white.png" alt="Quantica Lab" style="height:40px;width:auto;display:block;">
+    </div>
+    <div class="meta">OFERTA SZKOLEŃ · 2026</div>
+  </div>
+
+  <div class="cover-bottom">
+    <div class="cover-eyebrow">Quantica Lab</div>
+    <h1 class="cover-title">Szkolenia AI<br>dla <em>organizacji</em>.</h1>
+    <p class="cover-tagline">Od podstaw dla pracowników po warsztaty strategiczne dla zarządu.</p>
+  </div>
+
+  <div class="cover-footer">
+    <div>quanticalab.ai</div>
+    <div>Oferta szkoleń AI</div>
+  </div>
+</section>
+
+<!-- ═══════ PAGE 2 — WSTĘP ═══════ -->
+<section class="page page-content page-intro">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>02</em> / 06 · Oferta szkoleń</div>
+  </div>
+
+  <div class="eyebrow">Quantica Lab</div>
+  <h2 class="h-major">Quantica Lab<br>oferta szkoleń AI</h2>
+
+  <p>Rozwój kompetencji w obszarze AI staje się elementem odpowiedzialnego zarządzania organizacją. Decyduje on nie tylko o efektywności operacyjnej, ale także o zdolności organizacji do podejmowania trafnych decyzji i budowania przewagi konkurencyjnej.</p>
+
+  <p>Zgodnie z AI Act organizacje wykorzystujące systemy AI są zobowiązane do zapewnienia odpowiedniego poziomu wiedzy i świadomości pracowników (tzw. AI literacy). Obejmuje to zarówno rozumienie możliwości technologii, jak i jej ograniczeń, ryzyk oraz zasad bezpiecznego wykorzystania.</p>
+
+  <p>Jednocześnie w wielu organizacjach AI jest już wykorzystywana oddolnie – poza formalnymi procesami i politykami (tzw. „shadow AI"). Pracownicy korzystają z zewnętrznych narzędzi, często bez jasnych wytycznych dotyczących bezpieczeństwa danych czy odpowiedzialności za wyniki. W praktyce oznacza to realne ryzyko, zarówno operacyjne, jak i prawne.</p>
+
+  <p>Oferujemy praktyczne szkolenia, które budują kompetencje AI w Twojej organizacji – od podstaw dla wszystkich pracowników po zaawansowane warsztaty dla kadry zarządzającej.</p>
+
+  <p>Nasze podejście opiera się na pracy na rzeczywistych procesach i danych organizacji. Jesteśmy praktykami – tworzymy i wdrażamy rozwiązania AI – dlatego koncentrujemy się na tym, co ma realny sens biznesowy, unikając ogólnych przykładów i modnych narracji.</p>
+
+  <p>Szkolenia mają charakter warsztatowy i prowadzą do konkretnych rezultatów – od uporządkowania wiedzy i zasad korzystania z AI po zdefiniowanie inicjatyw i pierwszych kroków wdrożeniowych. Szczególny nacisk kładziemy na bezpieczeństwo, zgodność z regulacjami oraz podejmowanie świadomych decyzji technologicznych.</p>
+
+</section>
+
+<!-- ═══════ PAGE 3 — AI LITERACY ═══════ -->
+<section class="page page-content page-training">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>03</em> / 06 · AI Literacy</div>
+  </div>
+
+  <div class="eyebrow">Program szkoleniowy</div>
+  <h2 class="h-major">AI Literacy</h2>
+
+  <p class="lead-text">Szkolenie wprowadzające, które buduje wspólny język i zrozumienie AI w ramach organizacji. Uczestnicy zdobywają nie tylko wiedzę o tym, czym jest AI i jak działa, ale przede wszystkim uczą się rozpoznawać realne możliwości jej zastosowania w codziennej pracy oraz świadomie oceniać jej ograniczenia. Program ma charakter praktyczny i koncentruje się na odpowiedzialnym, bezpiecznym i efektywnym wykorzystaniu narzędzi AI w środowisku zawodowym.</p>
+
+  <div class="dist-list">
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 1</span>
+        Podstawy AI - demystyfikacja technologii
+      </div>
+      <ul class="bullets">
+        <li>Czym jest AI, ML, generatywna AI - wyjaśnienie bez żargonu</li>
+        <li>Jak działają modele językowe (intuicyjnie, bez matematyki)</li>
+        <li>Możliwości i ograniczenia - co AI potrafi, a czego nie</li>
+        <li>Praktyczne zastosowania w codziennej pracy (teksty, analiza, automatyzacja)</li>
+      </ul>
+    </div>
+
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 2</span>
+        Bezpieczne korzystanie z AI
+      </div>
+      <ul class="bullets">
+        <li>Zasady bezpieczeństwa danych przy pracy z AI</li>
+        <li>Co można, a czego nie można wprowadzać do narzędzi AI</li>
+        <li>Rozpoznawanie halucynacji i weryfikacja wyników</li>
+        <li>Polityka firmy dotycząca AI - dozwolone narzędzia i praktyki</li>
+        <li>Ochrona danych osobowych i poufnych informacji biznesowych</li>
+      </ul>
+    </div>
+
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 3</span>
+        Regulacje i etyka AI
+      </div>
+      <ul class="bullets">
+        <li>AI Act - kluczowe wymagania i co oznaczają dla pracowników</li>
+        <li>Klasyfikacja ryzyka systemów AI</li>
+        <li>Etyka AI: stronniczość, transparentność, odpowiedzialność</li>
+        <li>Human-in-the-loop - dlaczego decyzja zawsze należy do człowieka</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════ PAGE 4 — AI DLA KADRY: PROJEKTY ═══════ -->
+<section class="page page-content page-training">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>04</em> / 06 · AI dla kadry kierowniczej - projekty</div>
+  </div>
+
+  <div class="eyebrow">Program szkoleniowy</div>
+  <h2 class="h-major">AI dla kadry kierowniczej<br>- projekty</h2>
+
+  <p class="lead-text">Warsztaty operacyjne, których celem jest przełożenie kierunku działań w obszarze AI na konkretne inicjatywy. Pracujemy na realnych procesach organizacji, identyfikując projekty o największym sensie biznesowym i najwyższej wykonalności. Efektem jest uporządkowana lista inicjatyw wraz z oceną ich opłacalności, wymagań w zakresie danych oraz gotowości organizacyjnej.</p>
+
+  <div class="closing">
+    <p><strong>Przygotowanie do szkolenia:</strong> dwa 30-minutowe wywiady indywidualne z kierownictwem lub wybranymi pracownikami firmy (rekomendujemy udział pracowników wykorzystujących AI dzisiaj) w celu zrozumienia obecnej strategii AI firmy oraz stopnia wykorzystania AI.</p>
+  </div>
+
+  <div class="dist-list">
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 1</span>
+        Podstawy AI
+      </div>
+      <ul class="bullets">
+        <li>Czym jest AI, ML, generatywna AI - wyjaśnienie bez żargonu</li>
+        <li>Jak działają modele językowe (intuicyjnie, bez matematyki)</li>
+        <li>Przegląd aktualnego stanu technologii AI (generatywna AI, agenci, automatyzacja) pod kątem możliwości i ograniczeń - co AI potrafi, a czego nie</li>
+        <li>Przykłady wdrożeń AI w różnych branżach</li>
+        <li>Przedstawienie trendów technologicznych AI</li>
+      </ul>
+    </div>
+
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 2</span>
+        Analiza procesów pod kątem AI
+      </div>
+      <ul class="bullets">
+        <li>Kryteria oceny potencjału automatyzacji procesów (powtarzalność, złożoność, dane)</li>
+        <li>Warsztat: mapowanie procesów realizowanych w danym dziale</li>
+        <li>Identyfikacja „quick wins"</li>
+      </ul>
+    </div>
+
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 3</span>
+        Przygotowanie do projektów AI
+      </div>
+      <ul class="bullets">
+        <li>Ocena dostępności i jakości danych</li>
+        <li>Ocena kompetencji zespołu i luk do uzupełnienia</li>
+        <li>Analiza scenariuszy integracji z istniejącymi narzędziami (ERP, CRM, workflow)</li>
+        <li>Dyskusja warsztatowa - priorytetyzacja projektów</li>
+      </ul>
+    </div>
+
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 4</span>
+        Planowanie wdrożenia i ROI
+      </div>
+      <ul class="bullets">
+        <li>Definiowanie mierników sukcesu (KPI przed/po)</li>
+        <li>Tworzenie scenariuszy użycia i planu pilotażowego</li>
+        <li>Zarządzanie zmianą - przygotowanie zespołów</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════ PAGE 5 — AI DLA KADRY: STRATEGIA ═══════ -->
+<section class="page page-content page-training">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>05</em> / 06 · AI dla kadry kierowniczej - strategia</div>
+  </div>
+
+  <div class="eyebrow">Program szkoleniowy</div>
+  <h2 class="h-major">AI dla kadry kierowniczej<br>- strategia</h2>
+
+  <p class="lead-text">Warsztaty strategiczne dla zarządów, dyrektorów i menedżerów odpowiedzialnych za rozwój organizacji. Celem jest określenie realnej roli AI w modelu biznesowym firmy oraz wypracowanie spójnych zasad podejmowania decyzji w obszarze inwestycji technologicznych. Pracujemy na danych i procesach organizacji, oddzielając rzeczywiste możliwości od marketingowych narracji i krótkoterminowych trendów.</p>
+
+  <div class="closing">
+    <p><strong>Przygotowanie do szkolenia:</strong> dwa 30-minutowe wywiady indywidualne z kierownictwem lub wybranymi pracownikami firmy (rekomendujemy udział pracowników wykorzystujących AI dzisiaj) w celu zrozumienia obecnej strategii AI firmy oraz stopnia wykorzystania AI.</p>
+  </div>
+
+  <div class="dist-list">
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 1</span>
+        Podstawy AI
+      </div>
+      <ul class="bullets">
+        <li>Czym jest AI, ML, generatywna AI - wyjaśnienie bez żargonu</li>
+        <li>Jak działają modele językowe (intuicyjnie, bez matematyki)</li>
+        <li>Przegląd aktualnego stanu technologii AI (generatywna AI, agenci, automatyzacja) pod kątem możliwości i ograniczeń - co AI potrafi, a czego nie</li>
+        <li>Przykłady wdrożeń AI w różnych branżach</li>
+        <li>Przedstawienie trendów technologicznych AI</li>
+      </ul>
+    </div>
+
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 2</span>
+        Strategia AI - warsztaty
+      </div>
+      <ul class="bullets">
+        <li>Definiowanie wizji AI dla organizacji</li>
+        <li>Strategia firmy i priorytetyzacja projektów AI</li>
+        <li>Wybór obszarów wdrożenia (matryca wpływ/wykonalność)</li>
+      </ul>
+    </div>
+
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 3</span>
+        Analiza gotowości cyfrowej organizacji
+      </div>
+      <ul class="bullets">
+        <li>Dane: jakość, dostępność, integracja źródeł</li>
+        <li>Platforma i technologia: infrastruktura (chmura, środowisko lokalne), narzędzia (analityka, platformy ML), integracja (API, middleware)</li>
+        <li>Kompetencje: inżynieria danych, analityka, kompetencje związane z AI</li>
+        <li>Procesy: podejmowanie decyzji w oparciu o dane, kultura eksperymentowania, podatność procesów na automatyzację</li>
+        <li>Governance: odpowiedzialność za dane, bezpieczeństwo i zgodność z przepisami</li>
+      </ul>
+    </div>
+
+    <div class="dist-row">
+      <div class="dist-label">
+        <span class="modul-num">Moduł 4</span>
+        Przygotowanie do projektów AI
+      </div>
+      <ul class="bullets">
+        <li>Jak zaprojektować AI governance</li>
+        <li>Kluczowe działania na podstawie oceny gotowości cyfrowej</li>
+        <li>Zarządzanie zmianą - organizacja i pracownicy</li>
+        <li>Budowa roadmapy w perspektywie krótko- i długoterminowej</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════ PAGE 6 — START Z AI + KONTAKT ═══════ -->
+<section class="page page-last page-content page-6">
+
+  <div class="page-header">
+    <div class="logo"><img src="../quantica-logo-color.png" alt="Quantica Lab"></div>
+    <div class="pgnum"><em>06</em> / 06 · Start z AI & kontakt</div>
+  </div>
+
+  <div class="eyebrow">Warsztat wstępny</div>
+
+  <div class="start-box">
+    <div class="program-title">Start z AI?</div>
+    <p>Dwugodzinne, intensywne spotkanie robocze, które pozwala szybko ocenić, czy i w jakim zakresie AI ma realny sens w organizacji. Pracujemy na konkretnych procesach i wyzwaniach firmy - bez technicznych wykładów i bez marketingowych obietnic.</p>
+    <p>Celem warsztatów jest wstępna ocena, czy inwestycja w rozwiązania AI jest na tym etapie uzasadniona biznesowo i organizacyjnie. Jeśli tak, wskazujemy pierwsze, racjonalne kroki prowadzące do świadomego rozpoczęcia inicjatyw AI oraz obszary, w których technologia ta może przynieść wymierny efekt.</p>
+
+    <div class="dist-list">
+      <div class="dist-row">
+        <div class="dist-label">
+          <span class="modul-num">Moduł 1</span>
+          Cel i kontekst biznesowy
+        </div>
+        <ul class="bullets">
+          <li>Ustalenie głównego powodu wdrażania AI (optymalizacja kosztów, poprawa jakości, redukcja ryzyka, zwiększenie efektywności, budowa nowej wartości dla klientów)</li>
+          <li>Doprecyzowanie oczekiwanego efektu biznesowego</li>
+        </ul>
+      </div>
+      <div class="dist-row">
+        <div class="dist-label">
+          <span class="modul-num">Moduł 2</span>
+          Analiza procesów i identyfikacja szans
+        </div>
+        <ul class="bullets">
+          <li>Analiza kluczowych procesów i punktów wrażliwych w organizacji</li>
+          <li>Wskazanie miejsc, w których AI może przynieść najszybszy lub największy efekt</li>
+        </ul>
+      </div>
+      <div class="dist-row">
+        <div class="dist-label">
+          <span class="modul-num">Moduł 3</span>
+          Definiowanie inicjatyw i plan działania
+        </div>
+        <ul class="bullets">
+          <li>Sformułowanie 2-3 inicjatyw wraz z określeniem celu, zakresu i wymaganych danych</li>
+          <li>Wskazanie projektu o najwyższej wykonalności jako punktu startowego</li>
+          <li>Wstępna analiza dostępności danych i możliwości integracyjnych</li>
+          <li>Identyfikacja najważniejszych ryzyk i ograniczeń</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <section class="contact">
+    <div class="eyebrow">Kontakt</div>
+    <h2>Zapraszamy do kontaktu.</h2>
+    <div class="contact-info">
+      <div class="contact-logo">
+        <img src="../quantica-logo-white.png" alt="Quantica Lab">
+      </div>
+      <div class="contact-meta">
+        <strong>Quanticalab Sp. z o.o.</strong>
+        <a href="mailto:kontakt@quanticalab.ai">kontakt@quanticalab.ai</a>
+        <a href="https://www.quanticalab.ai" target="_blank" rel="noopener">www.quanticalab.ai</a>
+      </div>
+    </div>
+  </section>
+
+</section>
+
+</article>
+</body>
+</html>

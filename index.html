@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quantica Lab — AI dla organizacji</title>
+<meta name="description" content="Quantica Lab tworzy produkty AI, doradztwo strategiczne i szkolenia pomagające organizacjom wdrażać sztuczną inteligencję odpowiedzialnie i skutecznie." />
+
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700,900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --quantica-pink:    #C41E54;
+    --rose-pink:        #FF4D9A;
+    --deep-berry:       #8A004C;
+    --magenta-tint:     #FFE6F1;
+
+    --violet-primary:   #7030A0;
+    --violet-deep:      #4F1F75;
+    --ink:              #0A1F2C;
+    --mist:             #F4EEFA;
+
+    --near-black:       #111111;
+    --white:            #FFFFFF;
+
+    --soft-lilac:       #F3E8FF;
+    --cool-gray:        #E6E8EC;
+    --light-gray:       #F5F6F8;
+    --silver:           #D1D5DB;
+
+    --fg-1: #111111;
+    --fg-2: #3A3A42;
+    --fg-3: #6B6B76;
+    --fg-4: #9A9AA5;
+    --fg-on-pink: #FFFFFF;
+    --fg-brand:   #C41E54;
+
+    --bg-1: #FFFFFF;
+    --bg-2: #F5F6F8;
+    --bg-3: #FFE6F1;
+    --bg-inverse: #111111;
+
+    --border-1: #E6E8EC;
+    --border-2: #D1D5DB;
+    --border-brand: #C41E54;
+    --border-focus: #FF4D9A;
+
+    --font-display: "Satoshi", "Inter", system-ui, -apple-system, sans-serif;
+    --font-sans:    "Satoshi", "Inter", system-ui, -apple-system, sans-serif;
+    --font-mono:    "Geist Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-pill: 999px;
+
+    --shadow-xs: 0 1px 2px rgba(17,17,17,.04);
+    --shadow-sm: 0 2px 6px rgba(17,17,17,.06);
+    --shadow-md: 0 8px 24px rgba(17,17,17,.08);
+    --shadow-lg: 0 20px 48px rgba(17,17,17,.10);
+    --shadow-pink: 0 12px 32px rgba(196,30,84,.18);
+    --shadow-pink-soft: 0 6px 18px rgba(196,30,84,.10);
+    --inner-hairline: inset 0 0 0 1px rgba(17,17,17,.06);
+
+    --ease-standard:  cubic-bezier(.2,.6,.2,1);
+    --ease-out-soft:  cubic-bezier(.16,1,.3,1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    color: var(--fg-1);
+    background: var(--bg-1);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; }
+
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 56px; }
+  @media (max-width: 720px) { .container { padding: 0 24px; } }
+
+  /* ─── Type ─── */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--fg-brand);
+  }
+  .eyebrow.muted { color: var(--fg-3); }
+  h1, h2, h3, h4 { letter-spacing: -.01em; font-weight: 700; color: var(--fg-1); }
+
+  /* ─── Nav ─── */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: saturate(1.4) blur(12px);
+    -webkit-backdrop-filter: saturate(1.4) blur(12px);
+    border-bottom: 1px solid var(--border-1);
+  }
+  .nav-inner {
+    display: flex; align-items: center; gap: 40px;
+    padding: 18px 0;
+  }
+  .logo { display: flex; align-items: center; }
+  .logo img { height: 34px; }
+  .nav-links {
+    display: flex; align-items: center; gap: 32px; flex: 1;
+    margin-left: 16px;
+  }
+  .nav-links a {
+    font-size: 14px; color: var(--fg-2);
+    padding: 6px 0; border-bottom: 2px solid transparent;
+    transition: color 200ms var(--ease-standard);
+  }
+  .nav-links a:hover { color: var(--quantica-pink); }
+  .nav-links a.active {
+    color: var(--quantica-pink);
+    border-bottom-color: var(--quantica-pink);
+    font-weight: 500;
+  }
+
+  .btn {
+    font-family: inherit; font-size: 14px; font-weight: 500;
+    padding: 11px 22px; border-radius: var(--radius-pill);
+    border: none; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 200ms var(--ease-standard), color 200ms var(--ease-standard), box-shadow 200ms var(--ease-standard);
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: var(--quantica-pink);
+    color: var(--white);
+    box-shadow: var(--shadow-pink-soft);
+  }
+  .btn-primary:hover { background: var(--deep-berry); box-shadow: var(--shadow-pink); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--quantica-pink);
+    border: 1.5px solid var(--quantica-pink);
+  }
+  .btn-secondary:hover { background: var(--magenta-tint); }
+  .btn-tertiary {
+    background: transparent;
+    color: var(--fg-brand);
+    padding: 8px 0;
+  }
+  .btn-tertiary:hover { color: var(--deep-berry); }
+  .btn-lg { font-size: 15px; padding: 14px 28px; }
+  .btn-sm { font-size: 13px; padding: 9px 16px; }
+
+  .icon { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .icon-lg { width: 20px; height: 20px; }
+
+  /* ─── Hero ─── */
+  .hero {
+    position: relative;
+    padding: 96px 0 104px;
+    overflow: hidden;
+    background: var(--ink);
+  }
+  #particle-canvas {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .hero-content { position: relative; }
+  .hero-content .inner { max-width: 760px; }
+  .hero .eyebrow { color: var(--rose-pink); }
+  .hero h1 {
+    font-size: 68px;
+    line-height: 1.03;
+    letter-spacing: -.028em;
+    margin-top: 20px;
+    color: var(--white);
+  }
+  .hero h1 .accent { color: var(--rose-pink); }
+  .hero p.lede {
+    font-size: 18px; line-height: 1.65;
+    color: rgba(255,255,255,.72);
+    margin-top: 24px; max-width: 560px;
+  }
+  .hero-actions { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
+  .btn-on-dark {
+    background: var(--white);
+    color: var(--fg-1);
+  }
+  .btn-on-dark:hover { background: rgba(255,255,255,.88); }
+  .btn-ghost-dark {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,.28);
+  }
+  .btn-ghost-dark:hover { border-color: var(--white); }
+  @media (max-width: 720px) {
+    .hero { padding: 64px 0 72px; }
+    .hero h1 { font-size: 44px; }
+  }
+
+  /* ─── Offer section ─── */
+  .section { padding: 88px 0; }
+  .section.tight { padding: 56px 0; }
+  .section-head { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 48px; }
+  .section-head h2 {
+    font-size: 36px; line-height: 1.15;
+    letter-spacing: -.015em; font-weight: 700;
+    margin-top: 8px;
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 860px) { .offer-grid { grid-template-columns: 1fr; gap: 16px; } }
+
+  .offer-card {
+    border: 1px solid var(--border-1);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    background: var(--bg-1);
+    transition: border-color 240ms var(--ease-standard), box-shadow 240ms var(--ease-standard);
+  }
+  .offer-card:hover {
+    border-color: var(--quantica-pink);
+    box-shadow: var(--shadow-sm);
+  }
+  .offer-icon {
+    width: 48px; height: 48px;
+    background: var(--magenta-tint);
+    border-radius: var(--radius-md);
+    display: grid; place-items: center;
+    color: var(--quantica-pink);
+    margin-bottom: 20px;
+  }
+  .offer-icon svg { width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .offer-card h3 {
+    font-size: 20px; font-weight: 700;
+    letter-spacing: -.01em; line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .offer-card p {
+    font-size: 15px; line-height: 1.65;
+    color: var(--fg-2);
+  }
+
+  /* ─── Filter strip ─── */
+  .filter-strip {
+    border-top: 1px solid var(--border-1);
+    border-bottom: 1px solid var(--border-1);
+    background: var(--bg-1);
+    position: sticky; top: 71px; z-index: 40;
+  }
+  .filter-inner {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 0;
+    overflow-x: auto;
+  }
+  .filter-label {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--fg-3);
+    white-space: nowrap;
+  }
+  .chip {
+    font-family: inherit; font-size: 13px;
+    padding: 7px 14px; border-radius: var(--radius-pill);
+    border: 1px solid var(--border-1);
+    background: var(--white);
+    color: var(--fg-2);
+    cursor: pointer; white-space: nowrap;
+    transition: all 200ms var(--ease-standard);
+  }
+  .chip:hover { border-color: var(--quantica-pink); color: var(--quantica-pink); }
+  .chip.active {
+    background: var(--quantica-pink);
+    border-color: var(--quantica-pink);
+    color: var(--white);
+  }
+  .chip-count {
+    margin-left: 6px;
+    color: var(--fg-4);
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+  .chip.active .chip-count { color: rgba(255,255,255,.7); }
+
+  /* ─── Card grid ─── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--border-1);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform 240ms var(--ease-standard), box-shadow 240ms var(--ease-standard), border-color 240ms var(--ease-standard);
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-2);
+  }
+  .card .thumb {
+    position: relative;
+    height: 320px;
+    overflow: hidden;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border-1);
+    cursor: pointer;
+  }
+  .card .thumb iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 1080px;
+    height: 1525px;
+    transform: scale(0.34);
+    transform-origin: top left;
+    border: 0;
+    pointer-events: none;
+    background: var(--white);
+  }
+  .card .thumb .pin-tag {
+    position: absolute; top: 12px; left: 12px;
+    z-index: 2;
+  }
+  .card .thumb .open-link {
+    position: absolute; inset: 0;
+    z-index: 3;
+  }
+  .card .body {
+    padding: 22px 24px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+    flex: 1;
+  }
+  .card .body h3 {
+    font-size: 19px; line-height: 1.3;
+    letter-spacing: -.005em;
+    font-weight: 600; color: var(--fg-1);
+  }
+  .card .body p {
+    color: var(--fg-2); font-size: 13.5px; line-height: 1.6;
+    flex: 1;
+  }
+  .card .meta {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--fg-3);
+    letter-spacing: .04em;
+    display: flex; gap: 10px; flex-wrap: wrap;
+    padding-top: 6px;
+  }
+  .card .meta span + span::before {
+    content: "·"; margin-right: 10px; color: var(--fg-4);
+  }
+  .card .actions {
+    display: flex; gap: 8px;
+    padding: 14px 24px;
+    border-top: 1px solid var(--border-1);
+    background: var(--bg-2);
+  }
+
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--magenta-tint);
+    color: var(--quantica-pink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: var(--radius-pill);
+  }
+  .badge.violet { background: var(--mist); color: var(--violet-primary); }
+  .badge.neutral { background: var(--bg-2); color: var(--fg-2); }
+
+  /* ─── Metrics ─── */
+  .metrics {
+    border-top: 1px solid var(--border-1);
+    border-bottom: 1px solid var(--border-1);
+    background: var(--bg-1);
+    padding: 56px 0;
+  }
+  .metrics-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+  }
+  @media (max-width: 720px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
+  .metric .num {
+    font-size: 48px; line-height: 1; font-weight: 700;
+    letter-spacing: -.02em; color: var(--fg-1);
+  }
+  .metric .num em {
+    color: var(--quantica-pink); font-style: normal;
+  }
+  .metric .lbl {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--fg-3);
+  }
+
+  /* ─── CTA band ─── */
+  .cta-band {
+    background: var(--ink);
+    color: var(--white);
+    border-radius: var(--radius-xl);
+    padding: 64px 56px;
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (max-width: 720px) { .cta-band { grid-template-columns: 1fr; padding: 40px 28px; } }
+  .cta-band::before {
+    content: ""; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 90% 100%, rgba(196,30,84,.5) 0%, transparent 65%),
+      radial-gradient(ellipse 40% 55% at 0% 0%, rgba(112,48,160,.4) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-band > * { position: relative; }
+  .cta-band h2 {
+    font-size: 40px; line-height: 1.1;
+    letter-spacing: -.02em; color: var(--white);
+    margin-top: 8px;
+  }
+  .cta-band h2 .accent { color: var(--rose-pink); }
+  .cta-band p {
+    color: rgba(255,255,255,.72);
+    font-size: 16px; line-height: 1.65;
+    margin-top: 16px;
+  }
+  .cta-band .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+  /* ─── Footer ─── */
+  footer {
+    border-top: 1px solid var(--border-1);
+    padding: 48px 0 56px;
+    margin-top: 56px;
+  }
+  .foot-row {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 48px; flex-wrap: wrap;
+  }
+  .foot-meta {
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--fg-3);
+    letter-spacing: .08em; text-transform: uppercase;
+  }
+  .foot-links { display: flex; gap: 28px; flex-wrap: wrap; }
+  .foot-links a {
+    font-size: 13px; color: var(--fg-2);
+    transition: color 200ms var(--ease-standard);
+  }
+  .foot-links a:hover { color: var(--quantica-pink); }
+
+  /* ─── Empty state ─── */
+  .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 64px 24px;
+    color: var(--fg-3);
+    font-size: 14px;
+    border: 1px dashed var(--border-2);
+    border-radius: var(--radius-lg);
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#top" class="logo">
+      <img src="quantica-logo-color.png" alt="Quantica Lab" />
+    </a>
+    <div class="nav-links">
+      <a href="#oferta">Oferta</a>
+      <a href="#materialy" class="active">Materiały</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+    <a href="mailto:andrzej.jankowski@quanticalab.ai" class="btn btn-primary btn-sm">Skontaktuj się</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section id="top" class="hero">
+  <canvas id="particle-canvas"></canvas>
+  <div class="container hero-content">
+    <div class="inner">
+      <span class="eyebrow">Quantica Lab · AI dla organizacji</span>
+      <h1>
+        Inteligentne rozwiązania<br />
+        AI dla Twojej <span class="accent">organizacji.</span>
+      </h1>
+      <p class="lede">
+        Tworzymy produkty AI, doradztwo strategiczne i szkolenia, które pomagają
+        organizacjom wdrażać sztuczną inteligencję odpowiedzialnie i skutecznie.
+      </p>
+      <div class="hero-actions">
+        <a href="#materialy" class="btn btn-on-dark btn-lg">
+          Sprawdź materiały
+          <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="mailto:andrzej.jankowski@quanticalab.ai" class="btn btn-ghost-dark btn-lg">
+          Skontaktuj się
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ OFERTA ═══════════════ -->
+<section id="oferta" class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Czym się zajmujemy</span>
+        <h2>Nasza oferta</h2>
+      </div>
+    </div>
+    <div class="offer-grid">
+
+      <div class="offer-card">
+        <div class="offer-icon">
+          <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h1m5 0h1M9 15h1m5 0h1M9 12h6"/></svg>
+        </div>
+        <h3>Produkty AI</h3>
+        <p>Wdrożenia systemów AI dopasowanych do procesów i potrzeb organizacji — od systemów RAG po zaawansowane narzędzia automatyzacji.</p>
+      </div>
+
+      <div class="offer-card">
+        <div class="offer-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3>Doradztwo strategiczne</h3>
+        <p>Wsparcie na każdym etapie wdrożenia AI — od audytu gotowości organizacji, przez wybór architektury, po zarządzanie zmianą i zgodnością z regulacjami.</p>
+      </div>
+
+      <div class="offer-card">
+        <div class="offer-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+        </div>
+        <h3>Szkolenia</h3>
+        <p>Programy edukacyjne dla zespołów i kadry zarządzającej — budujemy kompetencje AI wewnątrz organizacji, od podstaw po zaawansowane zastosowania.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ METRICS ═══════════════ -->
+<div class="metrics">
+  <div class="container metrics-grid">
+    <div class="metric">
+      <div class="num"><em>PLLuM</em></div>
+      <div class="lbl">Polskie modele językowe</div>
+    </div>
+    <div class="metric">
+      <div class="num"><em>B2G</em> + B2B</div>
+      <div class="lbl">Administracja i biznes</div>
+    </div>
+    <div class="metric">
+      <div class="num">AI Act</div>
+      <div class="lbl">Zgodność z regulacjami</div>
+    </div>
+    <div class="metric">
+      <div class="num">100%</div>
+      <div class="lbl">Projekty realizowane lokalnie</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ FILTER + MATERIALS ═══════════════ -->
+<div class="filter-strip" id="materialy">
+  <div class="container filter-inner">
+    <span class="filter-label">Filtruj</span>
+    <button class="chip active" data-filter="all">Wszystkie<span class="chip-count">3</span></button>
+    <button class="chip" data-filter="administracja">Administracja<span class="chip-count">1</span></button>
+    <button class="chip" data-filter="benchmark">Benchmark<span class="chip-count">1</span></button>
+    <button class="chip" data-filter="szkolenia">Szkolenia<span class="chip-count">1</span></button>
+  </div>
+</div>
+
+<section class="section tight">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow">Publikacje i ulotki</span>
+        <h2>Materiały do pobrania</h2>
+      </div>
+      <span style="font-family:var(--font-mono);font-size:12px;color:var(--fg-3)">Otwórz i zapisz jako PDF</span>
+    </div>
+
+    <div class="grid" id="pub-grid">
+
+      <!-- QRAG flyer -->
+      <article class="card" data-asset="administracja rag">
+        <div class="thumb">
+          <span class="badge pin-tag">Nowość</span>
+          <iframe src="PUB_ready/QRAG_flyer.html" title="Podgląd: Bezpieczna AI dla administracji" loading="lazy" scrolling="no"></iframe>
+          <a href="PUB_ready/QRAG_flyer.html" target="_blank" rel="noopener" class="open-link" aria-label="Otwórz ulotkę QRAG"></a>
+        </div>
+        <div class="body">
+          <span class="eyebrow">Publikacja · 6 stron</span>
+          <h3>Bezpieczna AI dla administracji — system RAG</h3>
+          <p>
+            Sześciostronicowa publikacja A4 wyjaśniająca, jak system RAG pozwala jednostkom samorządu
+            terytorialnego wdrożyć AI na własnych danych — bezpiecznie, przejrzyście i z zachowaniem
+            kontroli nad informacjami.
+          </p>
+          <div class="meta">
+            <span>2026</span><span>A4 · 6 stron</span><span>PL</span>
+          </div>
+        </div>
+        <div class="actions">
+          <a href="PUB_ready/QRAG_flyer.html" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"/></svg>
+            Czytaj online
+          </a>
+        </div>
+      </article>
+
+      <!-- Benchmark AI -->
+      <article class="card" data-asset="benchmark ai">
+        <div class="thumb">
+          <iframe src="PUB_ready/benchmark_AI.html" title="Podgląd: Jak wybrać AI dla organizacji?" loading="lazy" scrolling="no"></iframe>
+          <a href="PUB_ready/benchmark_AI.html" target="_blank" rel="noopener" class="open-link" aria-label="Otwórz publikację o benchmarku AI"></a>
+        </div>
+        <div class="body">
+          <span class="eyebrow">Publikacja · 5 stron</span>
+          <h3>Jak wybrać AI dla organizacji? Benchmark modeli AI</h3>
+          <p>
+            Praktyczny przewodnik po kryteriach wyboru rozwiązań AI — od benchmarków publicznych po testy na własnych danych. Omawia proces wyboru modelu, kiedy potrzebna jest adaptacja i jak Quantica Lab wspiera organizacje w tym procesie.
+          </p>
+          <div class="meta">
+            <span>2026</span><span>A4 · 5 stron</span><span>PL</span>
+          </div>
+        </div>
+        <div class="actions">
+          <a href="PUB_ready/benchmark_AI.html" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"/></svg>
+            Czytaj online
+          </a>
+        </div>
+      </article>
+
+      <!-- Szkolenia AI -->
+      <article class="card" data-asset="szkolenia ai">
+        <div class="thumb">
+          <iframe src="PUB_ready/szkolenia_AI.html" title="Podgląd: Oferta szkoleń AI" loading="lazy" scrolling="no"></iframe>
+          <a href="PUB_ready/szkolenia_AI.html" target="_blank" rel="noopener" class="open-link" aria-label="Otwórz ofertę szkoleń AI"></a>
+        </div>
+        <div class="body">
+          <span class="eyebrow">Publikacja · 5 stron</span>
+          <h3>Oferta szkoleń AI — Quantica Lab</h3>
+          <p>
+            Cztery programy szkoleniowe: Start z AI, AI Literacy, AI dla kadry kierowniczej (projekty) oraz AI dla kadry kierowniczej (strategia). Warsztaty praktyczne oparte na realnych procesach organizacji.
+          </p>
+          <div class="meta">
+            <span>2026</span><span>A4 · 5 stron</span><span>PL</span>
+          </div>
+        </div>
+        <div class="actions">
+          <a href="PUB_ready/szkolenia_AI.html" target="_blank" rel="noopener" class="btn btn-primary btn-sm">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M14 3h7v7"/><path d="M10 14 21 3"/><path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6"/></svg>
+            Czytaj online
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<section class="section tight" id="kontakt">
+  <div class="container">
+    <div class="cta-band">
+      <div>
+        <span class="eyebrow" style="color: var(--rose-pink)">Porozmawiajmy</span>
+        <h2>
+          AI wdrożona <span class="accent">odpowiedzialnie.</span>
+        </h2>
+        <p>
+          Każde wdrożenie AI to decyzja o tym, komu powierzasz dane i procesy swojej organizacji.
+          Zapraszamy do rozmowy o tym, jak możemy pomóc — od audytu gotowości po pełne wdrożenie.
+        </p>
+      </div>
+      <div class="actions">
+        <a href="mailto:andrzej.jankowski@quanticalab.ai?subject=Zapytanie%20o%20wsp%C3%B3%C5%82prac%C4%99" class="btn btn-on-dark btn-lg">
+          Napisz do nas
+          <svg class="icon" viewBox="0 0 24 24"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://www.quanticalab.ai" target="_blank" rel="noopener" class="btn btn-ghost-dark btn-lg">
+          quanticalab.ai
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="container foot-row">
+    <div>
+      <a href="#top" class="logo"><img src="quantica-logo-color.png" alt="Quantica Lab" style="height:30px"/></a>
+      <div class="foot-meta" style="margin-top: 14px">Produkty AI · Doradztwo · Szkolenia</div>
+    </div>
+    <div class="foot-links">
+      <a href="#oferta">Oferta</a>
+      <a href="#materialy">Materiały</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="https://www.quanticalab.ai" target="_blank" rel="noopener">quanticalab.ai</a>
+    </div>
+    <div class="foot-meta">© Quantica Lab · 2026</div>
+  </div>
+</footer>
+
+<!-- ═══════════════ SCRIPTS ═══════════════ -->
+<script>
+  // ─── Particle wave ────────────────────────────────────────────────────────
+  (function () {
+    const canvas = document.getElementById('particle-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let t = 0;
+
+    function resize() {
+      const dpr = window.devicePixelRatio || 1;
+      const r = canvas.parentElement.getBoundingClientRect();
+      canvas.width = r.width * dpr;
+      canvas.height = r.height * dpr;
+      canvas.style.width = r.width + 'px';
+      canvas.style.height = r.height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function draw() {
+      const r = canvas.getBoundingClientRect();
+      ctx.clearRect(0, 0, r.width, r.height);
+      const cols = 120, rows = 26;
+      for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < rows; j++) {
+          const tt = i / cols;
+          const density = 0.28 + 0.70 * tt;
+          if (Math.random() > density) continue;
+          const phase = i * 0.16 + j * 0.10 + t * 0.011;
+          const wave = Math.sin(phase) * 16 + Math.sin(phase * 0.55 + t * 0.008) * 22;
+          const x = tt * r.width;
+          const y = (j / (rows - 1)) * r.height + wave;
+          const size = 0.6 + tt * 1.7;
+          const a = 0.10 + tt * 0.60;
+          ctx.fillStyle = `hsla(${330 + Math.sin(phase) * 6}, 100%, ${46 + tt * 8}%, ${a})`;
+          ctx.beginPath();
+          ctx.arc(x, y, size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      t += 1;
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ─── Filter chips ─────────────────────────────────────────────────────────
+  (function () {
+    const chips = document.querySelectorAll('.chip');
+    const cards = document.querySelectorAll('#pub-grid [data-asset]');
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        const f = chip.dataset.filter;
+        cards.forEach(card => {
+          const tokens = (card.dataset.asset || '').split(/\s+/);
+          card.style.display = (f === 'all' || tokens.includes(f)) ? '' : 'none';
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
